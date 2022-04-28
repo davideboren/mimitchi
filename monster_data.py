@@ -19,23 +19,65 @@ class MonsterData():
 	def __init__(self,spritedir):
 
 		sprites = listdir('monsters/' + spritedir)
-		prefix = sprites[0].split('_')[0]
+		if '_' in sprites[0]:
+			prefix = sprites[0].split('_')[0]
+		else:
+			prefix = sprites[1].split('_')[0]
 
-		self.spritedict = {
-			'stand' : [
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png')
-			],
-			'walk' : [
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png'),
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_3.png')
-			],
-			'run' : [
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_4.png'),
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_5.png')
-			],
-			'exercise' : [
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_6.png'),
-				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_7.png')
-			]
-		}
+
+		if len(sprites) == 13:
+			self.spritedict = {
+				'stand' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png')
+				],
+				'walk' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_3.png')
+				],
+				'run' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_4.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_5.png')
+				],
+				'exercise' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_6.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_7.png')
+				],
+				'happy' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_8.png')
+				],
+				'sleep' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png')
+				]
+			}
+
+		elif len(sprites) <= 6:
+			self.spritedict = {
+				'stand' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png')
+				],
+				'walk' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png')
+				],
+				'run' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png')
+				],
+				'exercise' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png')
+				],
+				'happy' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_8.png')
+				],
+				'sleep' : [
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png'),
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png')
+				]
+			}
+

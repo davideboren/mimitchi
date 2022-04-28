@@ -11,13 +11,13 @@ class Monster(pygame.sprite.Sprite):
 
 		self.mode = "walk"
 		self.mode_timer = 0
-		self.current_mode_duration = randint(2,14)
 		self.mode_duration = 10
 		self.mode_duration_range = {
-			"stand" 	: [4,14],
+			"stand" 	: [4,8],
 			"walk" 	: [99,99],
 			"run" 	: [99,99],
 			"exercise" 	: [6,8],
+			"happy" 	: [4,6],
 			"sleep" 	: [10,10]
 		}
 
@@ -83,13 +83,26 @@ class Monster(pygame.sprite.Sprite):
 			self.set_mode("stand")
 
 	def choose_random_mode(self):
-		modes = ['run','walk','exercise']
-		self.set_mode(modes[randint(0,len(modes) - 1)])
+
+		sel = randint(0,82)
+
+		if sel in range(0,10):
+			self.set_mode("stand")
+		if sel in range(10,20):
+			self.set_mode("happy")
+		elif sel in range(20,50):
+			self.set_mode("walk")
+		elif sel in range(50,75):
+			self.set_mode("run")
+		elif sel in range(75,80):
+			self.set_mode("exercise")
+		elif sel in range(80,82):
+			self.set_mode("sleep")
+		else:
+			self.set_mode("walk")
 
 		if self.mode == 'run' or self.mode == 'walk':
 			self.set_random_dest(self.mode)
-		else:
-			self.mode_duration = randint(self.mode_duration_range[self.mode][0],self.mode_duration_range[self.mode][1])
 
 	def set_random_dest(self,mode):
 		self.destx = randint(self.room.boundx[0],self.room.boundx[1])
