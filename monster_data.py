@@ -29,5 +29,13 @@ class MonsterData():
 			'walk' : [
 				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png'),
 				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_3.png')
+			],
+			'run' : [
+				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_4.png'),
+				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_5.png')
+			],
+			'exercise' : [
+				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_6.png'),
+				pygame.image.load('monsters/' + spritedir + '/' + prefix + '_7.png')
 			]
 		}
