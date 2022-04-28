@@ -11,7 +11,16 @@ class Monster(pygame.sprite.Sprite):
 
 		self.mode = "walk"
 		self.mode_timer = 0
-		self.mode_duration = randint(2,14)
+		self.current_mode_duration = randint(2,14)
+		self.mode_duration = 10
+		self.mode_duration_range = {
+			"stand" 	: [4,14],
+			"walk" 	: [99,99],
+			"run" 	: [99,99],
+			"exercise" 	: [6,8],
+			"sleep" 	: [10,10]
+		}
+
 		self.currentframe = 0
 		self.currentsprite = self.monster_data.spritedict[self.mode][self.currentframe]
 		self.surf = self.currentsprite
@@ -29,16 +38,9 @@ class Monster(pygame.sprite.Sprite):
 		#Only update sprite twice per second
 		if self.frame_counter >= self.framerate/2:
 
-			if self.mode == "stand":
-				if self.mode_timer > self.mode_duration:
-					self.choose_random_mode()
-					self.mode_timer = 0
-					self.mode_duration = randint(2,14)
-			elif self.mode == "exercise":
-				if self.mode_timer > 10:
-					self.mode = "stand"
-					self.mode_timer = 0
-					self.mode_duration = randint(2,14)
+			if self.mode_timer > self.mode_duration:
+				self.choose_random_mode()
+
 			self.mode_timer += 1
 
 			self.currentframe = self.currentframe ^ 1
@@ -56,12 +58,18 @@ class Monster(pygame.sprite.Sprite):
 	
 		self.frame_counter += 1
 
+	def set_mode(self,mode):
+		self.mode = mode
+		self.mode_duration = randint(self.mode_duration_range[self.mode][0],self.mode_duration_range[self.mode][1])
+		self.mode_timer = 0
+
 	def step_toward_dest(self):
 		dx = 0      
 		dy = 0
 
 		distx = self.destx - self.rect.x
 		disty = (self.desty - self.rect.y)
+
 
 		if(distx or disty):
 			if distx:
@@ -72,16 +80,18 @@ class Monster(pygame.sprite.Sprite):
 
 			self.rect.move_ip(dx,dy)
 		else:
-			self.mode = "stand"
+			self.set_mode("stand")
 
 	def choose_random_mode(self):
 		modes = ['run','walk','exercise']
-		self.mode = modes[randint(0,len(modes) - 1)]
+		self.set_mode(modes[randint(0,len(modes) - 1)])
 
 		if self.mode == 'run' or self.mode == 'walk':
 			self.set_random_dest(self.mode)
+		else:
+			self.mode_duration = randint(self.mode_duration_range[self.mode][0],self.mode_duration_range[self.mode][1])
 
 	def set_random_dest(self,mode):
 		self.destx = randint(self.room.boundx[0],self.room.boundx[1])
 		self.desty = randint(self.room.boundy[0],self.room.boundy[1])
-		self.mode = mode
+		self.set_mode(mode)
