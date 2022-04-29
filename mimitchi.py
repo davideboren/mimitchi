@@ -22,7 +22,12 @@ screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 room = Room('bg/grid.png',[0,176],[46,96])
 bg = room.bg
 
-mainMonster = Monster(MonsterData('blobby'),room)
+savefile = open("savefile","r")
+saves = savefile.read().split(",")
+savefile.close()
+
+mainMonster = Monster(MonsterData(saves[0]),room)
+mainMonster.age = int(saves[1])
 
 clock = pygame.time.Clock()
 
@@ -36,7 +41,14 @@ while running:
 		elif event.type == QUIT:
 			running = False
 
+	if mainMonster.age > mainMonster.lifespan:
+		mainMonster.evolve(MonsterData(mainMonster.monster_data.get_next_monster()))
+
 	mainMonster.update()
+
+	with open("savefile","w") as save:
+		save.write(mainMonster.monster_data.name + ',')
+		save.write(str(mainMonster.age))
 
 	screen.blit(bg,(0,0))
 
@@ -45,3 +57,4 @@ while running:
 	pygame.display.flip()
 
 	clock.tick(60)
+

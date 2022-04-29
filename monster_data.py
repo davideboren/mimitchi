@@ -14,18 +14,26 @@ Sleep: 		*_9.png
 
 import pygame
 from os import listdir
+from random import randint
 
 class MonsterData():
 	def __init__(self,spritedir):
 
+		self.name = spritedir
+
+		self.evo_list = []
+
+		evo_file = open('monsters/' + spritedir + '/evos.txt',"r")
+		for m in evo_file:
+			self.evo_list.append(m.split('\n')[0])
+
 		sprites = listdir('monsters/' + spritedir)
-		if '_' in sprites[0]:
-			prefix = sprites[0].split('_')[0]
-		else:
-			prefix = sprites[1].split('_')[0]
+		for spr in sprites:
+			if '_0.png' in spr:
+				prefix = spr.split('_')[0]
 
 
-		if len(sprites) == 13:
+		if len(sprites) >= 10:
 			self.spritedict = {
 				'stand' : [
 					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
@@ -53,7 +61,7 @@ class MonsterData():
 				]
 			}
 
-		elif len(sprites) <= 6:
+		elif len(sprites) <= 9:
 			self.spritedict = {
 				'stand' : [
 					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
@@ -81,3 +89,6 @@ class MonsterData():
 				]
 			}
 
+	def get_next_monster(self):
+		sel = randint(0,len(self.evo_list)-1)
+		return self.evo_list[sel]

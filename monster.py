@@ -4,10 +4,14 @@ from random import randint
 class Monster(pygame.sprite.Sprite):
 	def __init__(self,monster_data,room):
 		super(Monster,self).__init__()
+
 		self.frame_counter = 0
 		self.framerate = 60
 		self.monster_data = monster_data
 		self.room = room
+
+		self.age = 0
+		self.lifespan = 10
 
 		self.mode = "walk"
 		self.mode_timer = 0
@@ -47,6 +51,8 @@ class Monster(pygame.sprite.Sprite):
 			self.currentsprite = self.monster_data.spritedict[self.mode][self.currentframe]
 
 			self.frame_counter = 0
+
+			self.age += 1
 
 			
 		self.surf = pygame.transform.flip(self.currentsprite,self.facing_right,False)
@@ -108,3 +114,8 @@ class Monster(pygame.sprite.Sprite):
 		self.destx = randint(self.room.boundx[0],self.room.boundx[1])
 		self.desty = randint(self.room.boundy[0],self.room.boundy[1])
 		self.set_mode(mode)
+
+	def evolve(self,next_monster):
+		self.age = 0
+		self.monster_data = next_monster
+
