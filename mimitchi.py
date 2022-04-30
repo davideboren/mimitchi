@@ -52,6 +52,11 @@ while running:
 
 	screen.blit(bg,(0,0))
 
+	#Don't know how much I like this. Will probably change it.
+	shadow = mainMonster.surf.copy()
+	shadow.fill((25,25,25,200),None,pygame.BLEND_RGBA_MULT)
+
+	screen.blit(pygame.transform.scale(shadow,(80,16)),mainMonster.rect.move(-8,52))
 	screen.blit(mainMonster.surf,mainMonster.rect)
 
 	pygame.display.flip()
