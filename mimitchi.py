@@ -9,7 +9,6 @@ from pygame.locals import (
     QUIT
 )
 
-
 SCREEN_WIDTH = 240
 SCREEN_HEIGHT = 160
 
@@ -19,7 +18,7 @@ pygame.display.set_caption("Mimitchi")
 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
-room = Room('bg/grid.png',[0,176],[46,96])
+room = Room('bg/beetleland.png',[0,176],[46,96])
 bg = room.bg
 
 savefile = open("savefile","r")
@@ -55,8 +54,11 @@ while running:
 	shadow = mainMonster.surf.copy()
 	shadow.fill((0,0,0,175),None,pygame.BLEND_RGBA_MULT)
 
+
 	screen.blit(pygame.transform.smoothscale(shadow,(80,16)),mainMonster.rect.move(-16,48))
 	screen.blit(mainMonster.surf,mainMonster.rect)
+
+#	screen.fill((255,225,100,255),None,pygame.BLEND_RGBA_MIN)
 
 	pygame.display.flip()
 

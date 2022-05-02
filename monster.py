@@ -26,7 +26,7 @@ class Monster(pygame.sprite.Sprite):
 		}
 
 		self.currentframe = 0
-		self.currentsprite = self.monster_data.spritedict[self.mode][self.currentframe]
+		self.currentsprite = self.monster_data.get_sprite(self.mode,self.currentframe)
 		self.surf = self.currentsprite
 		self.rect = self.surf.get_rect()
 
@@ -48,7 +48,7 @@ class Monster(pygame.sprite.Sprite):
 			self.mode_timer += 1
 
 			self.currentframe = self.currentframe ^ 1
-			self.currentsprite = self.monster_data.spritedict[self.mode][self.currentframe]
+			self.currentsprite = self.monster_data.get_sprite(self.mode,self.currentframe)
 
 			self.frame_counter = 0
 

@@ -13,6 +13,7 @@ Sleep: 		*_9.png
 """
 
 import pygame
+import json
 from os import listdir
 from os.path import exists
 from random import randint
@@ -28,70 +29,24 @@ class MonsterData():
 		for m in evo_file:
 			self.evo_list.append(m.split('\n')[0])
 
-		sprites = listdir('monsters/' + spritedir)
-		for spr in sprites:
-			if '_0.png' in spr:
-				prefix = spr.split('_')[0]
+		with open('monsters/Tamagotchi_PS1/sprite_sheet_atlas.json','r') as f:
+			self.atlas = json.load(f)
+
+		self.sprite_sheet = pygame.image.load('monsters/' + spritedir + '/sprite_sheet.png')
+		self.bg_color = self.sprite_sheet.get_at((0,0))
 
 
-		if len(sprites) >= 10:
-			self.spritedict = {
-				'stand' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png')
-				],
-				'walk' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_3.png')
-				],
-				'run' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_4.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_5.png')
-				],
-				'exercise' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_6.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_7.png')
-				],
-				'happy' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_8.png')
-				],
-				'sleep' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png') \
-					if not exists('monsters/' + spritedir + '/' + prefix + '_12.png') \
-					else \
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_12.png')
-				]
-			}
-
-		elif len(sprites) <= 9:
-			self.spritedict = {
-				'stand' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png')
-				],
-				'walk' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png')
-				],
-				'run' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_2.png')
-				],
-				'exercise' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_0.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png')
-				],
-				'happy' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_1.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_8.png')
-				],
-				'sleep' : [
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png')
-				]
-			}
+	def get_sprite(self,mode,frame):
+		rect = pygame.Rect(\
+			self.atlas["coords"][mode][str(frame)][0],\
+			self.atlas["coords"][mode][str(frame)][1],\
+			self.atlas["sprite_w"],\
+			self.atlas["sprite_h"])
+		surf = pygame.Surface((64,64))
+		surf.fill(self.bg_color)
+		surf.blit(self.sprite_sheet,(8,16),rect)
+		surf.set_colorkey(self.bg_color)
+		return surf.convert_alpha()
 
 	def get_next_monster(self):
 		sel = randint(0,len(self.evo_list)-1)
