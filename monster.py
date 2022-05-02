@@ -11,7 +11,7 @@ class Monster(pygame.sprite.Sprite):
 		self.room = room
 
 		self.age = 0
-		self.lifespan = 10
+		self.lifespan = 30
 
 		self.mode = "walk"
 		self.mode_timer = 0

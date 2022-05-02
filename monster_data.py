@@ -14,6 +14,7 @@ Sleep: 		*_9.png
 
 import pygame
 from os import listdir
+from os.path import exists
 from random import randint
 
 class MonsterData():
@@ -57,7 +58,10 @@ class MonsterData():
 				],
 				'sleep' : [
 					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png'),
-					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png')
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_9.png') \
+					if not exists('monsters/' + spritedir + '/' + prefix + '_12.png') \
+					else \
+					pygame.image.load('monsters/' + spritedir + '/' + prefix + '_12.png')
 				]
 			}
 
