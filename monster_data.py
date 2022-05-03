@@ -22,17 +22,24 @@ class MonsterData():
 	def __init__(self,spritedir):
 
 		self.name = spritedir
+		self.currentdir = 'monsters/' + spritedir
+		self.atlas_filename = 'sprite_sheet_atlas.json'
 
 		self.evo_list = []
 
-		evo_file = open('monsters/' + spritedir + '/evos.txt',"r")
+		evo_file = open(self.currentdir + '/evos.txt',"r")
 		for m in evo_file:
 			self.evo_list.append(m.split('\n')[0])
 
-		with open('monsters/Tamagotchi_PS1/sprite_sheet_atlas.json','r') as f:
-			self.atlas = json.load(f)
+		#Check for sprite atlas override, otherwise use parent
+		if exists(self.currentdir + '/' + self.atlas_filename):
+			with open(self.currentdir + '/' + self.atlas_filename, 'r') as f:
+				self.atlas = json.load(f)
+		else:
+			with open(self.currentdir + '/../' + self.atlas_filename, 'r') as f:
+				self.atlas = json.load(f)
 
-		self.sprite_sheet = pygame.image.load('monsters/' + spritedir + '/sprite_sheet.png')
+		self.sprite_sheet = pygame.image.load(self.currentdir + '/sprite_sheet.png')
 		self.bg_color = self.sprite_sheet.get_at((0,0))
 
 
