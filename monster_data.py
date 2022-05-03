@@ -51,10 +51,16 @@ class MonsterData():
 			self.atlas["sprite_h"])
 		surf = pygame.Surface((64,64))
 		surf.fill(self.bg_color)
-		surf.blit(self.sprite_sheet,(8,16),rect)
+		surf.blit(self.sprite_sheet,\
+			( (64 - self.atlas["sprite_w"])/2, \
+			64 - self.atlas["sprite_h"]), \
+			rect)
 		surf.set_colorkey(self.bg_color)
 		return surf.convert_alpha()
 
 	def get_next_monster(self):
 		sel = randint(0,len(self.evo_list)-1)
 		return self.evo_list[sel]
+
+	def get_num_frames(self,mode):
+		return len(self.atlas["coords"][mode])

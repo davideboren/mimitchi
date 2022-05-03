@@ -13,7 +13,7 @@ class Monster(pygame.sprite.Sprite):
 		self.age = 0
 		self.lifespan = 30
 
-		self.mode = "walk"
+		self.mode = "stand"
 		self.mode_timer = 0
 		self.mode_duration = 10
 		self.mode_duration_range = {
@@ -47,7 +47,7 @@ class Monster(pygame.sprite.Sprite):
 
 			self.mode_timer += 1
 
-			self.currentframe = self.currentframe ^ 1
+			self.currentframe = (self.currentframe + 1) % self.monster_data.get_num_frames(self.mode)
 			self.currentsprite = self.monster_data.get_sprite(self.mode,self.currentframe)
 
 			self.frame_counter = 0
@@ -114,8 +114,4 @@ class Monster(pygame.sprite.Sprite):
 		self.destx = randint(self.room.boundx[0],self.room.boundx[1])
 		self.desty = randint(self.room.boundy[0],self.room.boundy[1])
 		self.set_mode(mode)
-
-	def evolve(self,next_monster):
-		self.age = 0
-		self.monster_data = next_monster
 

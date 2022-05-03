@@ -1,5 +1,6 @@
 import pygame
 from monster import Monster
+from egg import Egg
 from monster_data import MonsterData
 from room import Room
 
@@ -25,7 +26,11 @@ savefile = open("savefile","r")
 saves = savefile.read().split(",")
 savefile.close()
 
-mainMonster = Monster(MonsterData(saves[0]),room)
+if "Egg" in saves[0]:
+	mainMonster = Egg(MonsterData(saves[0]),room)
+else:
+	mainMonster = Monster(MonsterData(saves[0]),room)
+
 mainMonster.age = int(saves[1])
 
 clock = pygame.time.Clock()
@@ -40,8 +45,19 @@ while running:
 		elif event.type == QUIT:
 			running = False
 
-	if mainMonster.age > mainMonster.lifespan:
-		mainMonster.evolve(MonsterData(mainMonster.monster_data.get_next_monster()))
+	if mainMonster.age >= mainMonster.lifespan:
+		next_monster = mainMonster.monster_data.get_next_monster()
+		cur_x = mainMonster.rect.x
+		cur_y = mainMonster.rect.y
+
+		if "Egg" in next_monster:
+			mainMonster = Egg(MonsterData(next_monster),room)
+		else:
+			mainMonster = Monster(MonsterData(next_monster),room)
+
+		mainMonster.rect.x = cur_x
+		mainMonster.rect.y = cur_y
+
 
 	mainMonster.update()
 
