@@ -3,6 +3,7 @@ from monster import Monster
 from egg import Egg
 from monster_data import MonsterData
 from room import Room
+from solar import Solar
 
 from pygame.locals import (
     K_ESCAPE,
@@ -21,6 +22,8 @@ screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
 room = Room('bg/beetleland.png',[0,176],[46,96])
 bg = room.bg
+
+solar = Solar()
 
 savefile = open("savefile","r")
 saves = savefile.read().split(",")
@@ -61,6 +64,8 @@ while running:
 
 	mainMonster.update()
 
+	solar.update()
+
 	with open("savefile","w") as save:
 		save.write(mainMonster.monster_data.name + ',')
 		save.write(str(mainMonster.age))
@@ -71,10 +76,10 @@ while running:
 	shadow.fill((0,0,0,175),None,pygame.BLEND_RGBA_MULT)
 
 
-	screen.blit(pygame.transform.smoothscale(shadow,(80,16)),mainMonster.rect.move(-16,48))
+	screen.blit(pygame.transform.smoothscale(shadow,(solar.shadow_w,16)),mainMonster.rect.move(solar.shadow_dx,48))
 	screen.blit(mainMonster.surf,mainMonster.rect)
 
-#	screen.fill((255,225,100,255),None,pygame.BLEND_RGBA_MIN)
+	screen.fill(solar.get_tint(),None,pygame.BLEND_RGBA_MIN)
 
 	pygame.display.flip()
 
