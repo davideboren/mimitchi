@@ -1,1 +1,3 @@
 Tamagotchi_PS1/Mametchi
+Tamagotchi_PS1/Ginjirotchi
+Tamagotchi_PS1/Masukutchi

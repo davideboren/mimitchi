@@ -23,9 +23,11 @@ class Solar():
 		self.shadow_dx = -16
 		self.shadow_dy = 48
 
+		self.update_shadow_values()
+
 	def update(self):
-		#if self.frame_counter >= self.frame_rate * 60:
-		if self.frame_counter >= 8:
+		if self.frame_counter >= self.frame_rate * 60:
+		#if self.frame_counter >= 8:
 
 			if self.minute >= self.day_length - 1:
 				self.minute = 0
@@ -33,6 +35,7 @@ class Solar():
 			self.frame_counter = 0
 
 			self.minute += 1
+			print(self.minute)
 
 			self.update_tint() 
 			self.update_shadow_values()
@@ -55,5 +58,5 @@ class Solar():
 
 	def update_shadow_values(self):
 		self.shadow_w = 32 * math.cos(((self.minute / (self.day_length/2)) * 2 * math.pi)) + 96
-		self.shadow_dx = (self.shadow_w/6) * -math.cos(((self.minute / (self.day_length/2)) *  math.pi)) - (self.shadow_w/4)
+		self.shadow_dx = (self.shadow_w/8) * -math.cos(((self.minute / (self.day_length/2)) *  math.pi)) - (self.shadow_w/4)
 
