@@ -24,8 +24,8 @@ class Solar():
 		self.shadow_dy = 48
 
 	def update(self):
-		#if self.frame_counter >= self.frame_rate * 1:
-		if self.frame_counter >= 2:
+		#if self.frame_counter >= self.frame_rate * 60:
+		if self.frame_counter >= 8:
 
 			if self.minute >= self.day_length - 1:
 				self.minute = 0
@@ -54,7 +54,6 @@ class Solar():
 		return self.tint
 
 	def update_shadow_values(self):
-		#Has some problems, shadows tend to run away from their sprites
-		self.shadow_w = 32 * math.sin(((self.minute / self.day_length) * 2 * math.pi) - (math.pi/2)) + 96
-		self.shadow_dx = (self.shadow_w/2) * math.sin(((self.minute / self.day_length) * 2 * math.pi) + (math.pi/2))
+		self.shadow_w = 32 * math.cos(((self.minute / (self.day_length/2)) * 2 * math.pi)) + 96
+		self.shadow_dx = (self.shadow_w/6) * -math.cos(((self.minute / (self.day_length/2)) *  math.pi)) - (self.shadow_w/4)
 
