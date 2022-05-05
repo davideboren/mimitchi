@@ -35,7 +35,6 @@ class Solar():
 			self.frame_counter = 0
 
 			self.minute += 1
-			print(self.minute)
 
 			self.update_tint() 
 			self.update_shadow_values()

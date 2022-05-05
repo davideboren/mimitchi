@@ -28,6 +28,7 @@ class EvoOverlay(pygame.sprite.Sprite):
 			elif self.mode == "roll_out":
 				if self.rect.width > 0:
 					self.rect.left += self.x_interval
+					self.sprite = pygame.transform.flip(self.sprite,False,True)
 
 			self.sprite = pygame.transform.flip(self.sprite,False,True)
 			self.frame_counter = 0
@@ -36,5 +37,5 @@ class EvoOverlay(pygame.sprite.Sprite):
 	
 	def get_sprite(self):
 		surf = pygame.Surface((self.rect.width,self.rect.height))
-		surf.blit(self.sprite,self.rect,self.rect)
+		surf.blit(self.sprite,(0,0))
 		return surf

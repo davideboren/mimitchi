@@ -25,7 +25,7 @@ room = Room('bg/beetleland.png',[0,176],[46,96])
 bg = room.bg
 
 solar = Solar()
-evo_overlay = EvoOverlay()
+#evo_overlay = EvoOverlay()
 
 savefile = open("savefile","r")
 saves = savefile.read().split(",")
@@ -67,7 +67,7 @@ while running:
 
 	mainMonster.update()
 
-	evo_overlay.update()
+	#evo_overlay.update()
 
 	solar.update()
 
@@ -86,7 +86,7 @@ while running:
 
 	screen.fill(solar.get_tint(),None,pygame.BLEND_RGBA_MIN)
 
-	screen.blit(evo_overlay.get_sprite(),evo_overlay.rect)
+	#screen.blit(evo_overlay.get_sprite(),evo_overlay.rect)
 
 	pygame.display.flip()
 
