@@ -4,6 +4,7 @@ from egg import Egg
 from monster_data import MonsterData
 from room import Room
 from solar import Solar
+from evo_overlay import EvoOverlay
 
 from pygame.locals import (
     K_ESCAPE,
@@ -24,6 +25,7 @@ room = Room('bg/beetleland.png',[0,176],[46,96])
 bg = room.bg
 
 solar = Solar()
+evo_overlay = EvoOverlay()
 
 savefile = open("savefile","r")
 saves = savefile.read().split(",")
@@ -49,6 +51,7 @@ while running:
 			running = False
 
 	if mainMonster.age >= mainMonster.lifespan:
+
 		next_monster = mainMonster.monster_data.get_next_monster()
 		cur_x = mainMonster.rect.x
 		cur_y = mainMonster.rect.y
@@ -63,6 +66,8 @@ while running:
 
 
 	mainMonster.update()
+
+	evo_overlay.update()
 
 	solar.update()
 
@@ -80,6 +85,8 @@ while running:
 	screen.blit(mainMonster.surf,mainMonster.rect)
 
 	screen.fill(solar.get_tint(),None,pygame.BLEND_RGBA_MIN)
+
+	screen.blit(evo_overlay.get_sprite(),evo_overlay.rect)
 
 	pygame.display.flip()
 
