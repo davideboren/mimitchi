@@ -7,7 +7,7 @@ class Solar():
 		self.day_length = 240
 		self.frame_rate = 60
 		self.frame_counter = 0
-		self.minute = 0
+		self.minute = 60
 
 		self.tint_key = [
 			(255,255,255),

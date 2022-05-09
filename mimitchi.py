@@ -25,7 +25,7 @@ room = Room('bg/beetleland.png',[0,176],[46,96])
 bg = room.bg
 
 solar = Solar()
-#evo_overlay = EvoOverlay()
+evo_overlay = EvoOverlay()
 
 savefile = open("savefile","r")
 saves = savefile.read().split(",")
@@ -51,23 +51,35 @@ while running:
 			running = False
 
 	if mainMonster.age >= mainMonster.lifespan:
-
-		next_monster = mainMonster.monster_data.get_next_monster()
-		cur_x = mainMonster.rect.x
-		cur_y = mainMonster.rect.y
-
-		if "Egg" in next_monster:
-			mainMonster = Egg(MonsterData(next_monster),room)
-		else:
+		if isinstance(mainMonster,Egg):
+			next_monster = mainMonster.monster_data.get_next_monster()
+			cur_x = mainMonster.rect.x
+			cur_y = mainMonster.rect.y
 			mainMonster = Monster(MonsterData(next_monster),room)
+			mainMonster.rect.x = cur_x
+			mainMonster.rect.y = cur_y
+		else:
+			if not evo_overlay.mode == "roll_in":
+				evo_overlay.mode = "roll_in"
 
-		mainMonster.rect.x = cur_x
-		mainMonster.rect.y = cur_y
+			if evo_overlay.rolled_in == True:
+				next_monster = mainMonster.monster_data.get_next_monster()
+				cur_x = mainMonster.rect.x
+				cur_y = mainMonster.rect.y
 
+				if "Egg" in next_monster:
+					mainMonster = Egg(MonsterData(next_monster),room)
+				else:
+					mainMonster = Monster(MonsterData(next_monster),room)
+
+				mainMonster.rect.x = cur_x
+				mainMonster.rect.y = cur_y
+
+				evo_overlay.mode = "roll_out"
 
 	mainMonster.update()
 
-	#evo_overlay.update()
+	evo_overlay.update()
 
 	solar.update()
 
@@ -86,7 +98,7 @@ while running:
 
 	screen.fill(solar.get_tint(),None,pygame.BLEND_RGBA_MIN)
 
-	#screen.blit(evo_overlay.get_sprite(),evo_overlay.rect)
+	screen.blit(evo_overlay.get_sprite(),evo_overlay.rect)
 
 	pygame.display.flip()
 

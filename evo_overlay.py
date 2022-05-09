@@ -6,13 +6,13 @@ class EvoOverlay(pygame.sprite.Sprite):
 		self.width = 240
 		self.height = 160
 
-		self.mode = "roll_in"
+		self.mode = "none"
 		self.rolled_in = False
 
 		self.counter = 0
 
 		self.sprite = pygame.image.load("bg/evo_overlay.png")
-		self.rect = pygame.Rect(0,0,16,self.height)
+		self.rect = pygame.Rect(0,0,0,self.height)
 		
 	def update(self):
 
@@ -26,9 +26,13 @@ class EvoOverlay(pygame.sprite.Sprite):
 					self.mode = "roll_out"
 
 			elif self.mode == "roll_out":
-				if self.rect.width > 0:
+				if self.rect.left < self.width:
 					self.rect.left += self.x_interval
 					self.sprite = pygame.transform.flip(self.sprite,False,True)
+				else:
+					self.rect = pygame.Rect(0,0,0,self.height)
+					self.mode = "none"
+					self.rolled_in = False
 
 			self.sprite = pygame.transform.flip(self.sprite,False,True)
 			self.frame_counter = 0
