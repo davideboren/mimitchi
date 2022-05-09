@@ -83,7 +83,7 @@ while running:
 
 	solar.update()
 
-	with open("savefile","w") as save:
+	with open("../savefile","w") as save:
 		save.write(mainMonster.monster_data.name + ',')
 		save.write(str(mainMonster.age))
 
