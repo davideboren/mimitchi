@@ -11,7 +11,7 @@ class EvoOverlay(pygame.sprite.Sprite):
 
 		self.counter = 0
 
-		self.sprite = pygame.image.load("bg/evo_overlay.png")
+		self.sprite = pygame.image.load("../gfx/evo_overlay.png")
 		self.rect = pygame.Rect(0,0,0,self.height)
 		
 	def update(self):

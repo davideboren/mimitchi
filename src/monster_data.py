@@ -22,7 +22,7 @@ class MonsterData():
 	def __init__(self,spritedir):
 
 		self.name = spritedir
-		self.currentdir = 'monsters/' + spritedir
+		self.currentdir = '../monsters/' + spritedir
 		self.atlas_filename = 'sprite_sheet_atlas.json'
 
 		self.evo_list = []

@@ -21,13 +21,13 @@ pygame.display.set_caption("Mimitchi")
 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
-room = Room('bg/beetleland.png',[0,176],[46,96])
+room = Room('../bg/beetleland.png',[0,176],[46,96])
 bg = room.bg
 
 solar = Solar()
 evo_overlay = EvoOverlay()
 
-savefile = open("savefile","r")
+savefile = open("../savefile","r")
 saves = savefile.read().split(",")
 savefile.close()
 
